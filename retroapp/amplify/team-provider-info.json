@@ -1,0 +1,29 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-retroapp-dev-181325-authRole",
+      "UnauthRoleArn": "arn:aws:iam::710976282506:role/amplify-retroapp-dev-181325-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::710976282506:role/amplify-retroapp-dev-181325-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-retroapp-dev-181325-deployment",
+      "UnauthRoleName": "amplify-retroapp-dev-181325-unauthRole",
+      "StackName": "amplify-retroapp-dev-181325",
+      "StackId": "arn:aws:cloudformation:us-east-1:710976282506:stack/amplify-retroapp-dev-181325/d3487e90-847f-11ed-a928-123a83ffabf5",
+      "AmplifyAppId": "d1qdq1qsflz8qf"
+    },
+    "categories": {
+      "api": {
+        "retroapp": {}
+      },
+      "auth": {
+        "retroapp4e34503d": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d1qdq1qsflz8qf",
+          "type": "manual"
+        }
+      }
+    }
+  }
+}
