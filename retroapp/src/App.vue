@@ -6,19 +6,24 @@ import HelloWorld from "./components/HelloWorld.vue";
 </script>
 
 <template>
-  <authenticator>
-    <template v-slot="{ user, signOut }">
-      <h1>Hello {{ user.username }}!</h1>
-      <button @click="signOut">Sign Out</button>
-    </template>
-  </authenticator>
+<v-app>
+  
 
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+  <!--<authenticator>-->
+  <!--  <template v-slot="{ user, signOut }">-->
+  <!--    <h1>Hello {{ user.username }}!</h1>-->
+  <!--    <button @click="signOut">Sign Out</button>-->
+  <!--  </template>-->
+  <!--</authenticator>-->
+
+  <!--    <nav>-->
+  <!--      <RouterLink to="/">Home</RouterLink>-->
+  <!--      <RouterLink to="/about">About</RouterLink>-->
+  <!--      <RouterLink to="retros">Retro Home Page</RouterLink>-->
+  <!--    </nav>-->
 
   <RouterView />
+  </v-app>
 </template>
 
 <style scoped>
