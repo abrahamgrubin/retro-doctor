@@ -1,24 +1,31 @@
-<script setup>
+<script>
 import { RouterLink, RouterView } from "vue-router";
 import HelloWorld from "./components/HelloWorld.vue";
-  import { Authenticator } from '@aws-amplify/ui-vue';
-  import '@aws-amplify/ui-vue/styles.css';
+import { Authenticator } from '@aws-amplify/ui-vue';
+import '@aws-amplify/ui-vue/styles.css';
+import { IonApp, IonRouterOutlet } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+  export default defineComponent({
+    name: 'App',
+    components: {
+      IonApp,
+      IonRouterOutlet,
+      Authenticator,
+    },
+  });
 </script>
 
 <template>
-  <authenticator>
-    <template v-slot="{ user, signOut }">
-      <h1>Hello {{ user.username }}!</h1>
-      <button @click="signOut">Sign Out</button>
-    </template>
-  </authenticator>
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-
-  <RouterView />
+  <ion-app>
+    <ion-router-outlet />
+  <!--    <authenticator>-->
+  <!--      <template v-slot="{ user, signOut }">-->
+  <!--      <h1>Hello {{ user.username }}!</h1>-->
+  <!--      <button @click="signOut">Sign Out</button>-->
+  <!--  </template>-->
+  <!--</authenticator>-->
+  </ion-app>
 </template>
 
 <style scoped>
