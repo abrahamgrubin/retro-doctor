@@ -1,13 +1,43 @@
 <template>
-
-  <ion-page>
-    <ion-header :translucent="true">
+  <authenticator></authenticator>
+    <ion-menu content-id="main-content">
+    <ion-header>
       <ion-toolbar>
-        <ion-title>Retro Doctor</ion-title>
+        <ion-title>Menu Content</ion-title>
       </ion-toolbar>
     </ion-header>
+    <ion-content class="ion-padding">This is the menu content.</ion-content>
+  </ion-menu>
+  <ion-page id="main-content">
+         <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Menu</ion-title>
+        <ion-buttons slot="end">
+          <ion-chip>
+            
 
-    <ion-content>
+        <ion-avatar>
+          <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+        </ion-avatar>
+        <ion-label>
+          {{this.auth.user.username}}
+        </ion-label>
+                  </ion-chip>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <!--<ion-header :translucent="true">-->
+    <!--  <ion-toolbar>-->
+    <!--    <ion-title>Retro Doctor</ion-title>-->
+    <!--    {{ this.auth.user.username }}-->
+    <!--  </ion-toolbar>-->
+    <!--</ion-header>-->
+
+    <ion-content class="ion-padding">
+
       <ion-grid>
           <ion-row>
             <ion-col class="ion-text-center">
@@ -37,7 +67,7 @@
                           <ion-thumbnail slot="start">
                             <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
                           </ion-thumbnail>
-                          <ion-label>{{ element.name }} {{ index }}</ion-label>
+                          <ion-note><p>{{ element.name }} {{ index }}</p></ion-note>
                       </ion-item>
                     </template>
                     </draggable>
@@ -65,7 +95,7 @@
                           <ion-thumbnail slot="start">
                           <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
                           </ion-thumbnail>
-                          <ion-label>{{ element.name }} {{ index }}</ion-label>
+                          <ion-note>{{ element.name }} {{ index }}</ion-note>
                         </ion-item>
                       </template>
                     </draggable>
@@ -93,7 +123,7 @@
                           <ion-thumbnail slot="start">
                           <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
                           </ion-thumbnail>
-                          <ion-label>{{ element.name }} {{ index }}</ion-label>
+                          <ion-note>{{ element.name }} {{ index }}</ion-note>
                         </ion-item>
                       </template>
                     </draggable>
@@ -104,7 +134,7 @@
                           <ion-col class="ion-text-center">
               <ion-card>
                 <ion-card-header>
-                  <ion-card-title>Action Items</ion-card-title>
+                  <ion-card-title>Action Item</ion-card-title>
                   <ion-card-subtitle>Let's do something about it</ion-card-subtitle>
                 </ion-card-header>
                 <ion-card-content>
@@ -121,7 +151,7 @@
                           <ion-thumbnail slot="start">
                           <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
                           </ion-thumbnail>
-                          <ion-label>{{ element.name }} {{ index }}</ion-label>
+                          <ion-note>{{ element.name }} {{ index }}</ion-note>
                         </ion-item>
                       </template>
                     </draggable>
@@ -141,13 +171,14 @@
 </template>
 
 <script lang="ts">
-  import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonIcon, IonCol, IonGrid, IonRow, IonList,  IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle,  IonReorder, IonReorderGroup   } from '@ionic/vue';
+  import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonIcon, IonCol, IonGrid, IonRow, IonList,  IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle,  IonReorder, IonReorderGroup, IonMenu, IonMenuButton   } from '@ionic/vue';
+  import { Authenticator,useAuthenticator } from '@aws-amplify/ui-vue';
   import { defineComponent } from 'vue';
   import { add } from 'ionicons/icons';
   import { useRouter } from 'vue-router';
   
   import draggable from 'vuedraggable';
-
+  const auth = useAuthenticator();
   export default defineComponent({
     name: 'Home',
     display: "Two Lists",
@@ -170,7 +201,9 @@
       IonCardContent,
       IonCardHeader,
       IonCardSubtitle,
-      IonCardTitle
+      IonCardTitle, 
+      IonMenu, 
+      IonMenuButton,
     },
     setup() {
       return {
@@ -180,6 +213,7 @@
     },
       data() {
     return {
+      auth: auth,
       list1: [
         { name: "this is a test of an idea of something that someone might have", id: 1 },
         { name: "Joao", id: 2 },
@@ -203,7 +237,7 @@
         }
         ], 
       list4: [
-        {name: "Marion", id: 11},
+        {name: "this is a note that is a note an is an note and stuff, how big should I make this note? Can I keep going and going and going?", id: 11},
         {name: "Rob", id: 12},
         {name:"Marcy", id: 13},
         {name: "Ken", id: 14}

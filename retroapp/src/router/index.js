@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import HomeView from "../views/HomeView.vue";
 import NewItem from "../views/NewItem.vue";
+import AuthView from "../views/AuthView.vue";
  const routes = [
     {
       path: "/",
@@ -19,6 +20,11 @@ import NewItem from "../views/NewItem.vue";
       path: "/new",
       name: 'NewItem',
       component: NewItem
+    }, 
+    {
+      path: "/auth",
+      name: 'Auth',
+      component: AuthView
     }
   ];
 const router = createRouter({
