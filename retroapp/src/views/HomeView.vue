@@ -16,61 +16,36 @@
                   <ion-card-title>Topics</ion-card-title>
                   <ion-card-subtitle>What's on your mind?</ion-card-subtitle>
                 </ion-card-header>
-                          <div class="row">
-    <div class="col-3">
-      <h3>Draggable 1</h3>
-      <draggable
-        class="list-group"
-        :list="list1"
-        group="people"
-        @change="log"
-        itemKey="name"
-      >
+  
+
         <template #item="{ element, index }">
           <div class="list-group-item">{{ element.name }} {{ index }}</div>
         </template>
-      </draggable>
-    </div>
 
 
-    <!--<rawDisplayer class="col-3" :value="list1" title="List 1" />-->
-
-    <!--<rawDisplayer class="col-3" :value="list2" title="List 2" />-->
-  </div>
                 <ion-card-content>
                   <ion-list>
-                    <ion-item>
-                      <ion-thumbnail slot="start">
-                        <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-                      </ion-thumbnail>
-                      <ion-label>Item</ion-label>
-                    </ion-item>
-              
-                    <ion-item>
-                      <ion-thumbnail slot="start">
-                        <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-                      </ion-thumbnail>
-                      <ion-label>Item</ion-label>
-                    </ion-item>
-              
-                    <ion-item>
-                      <ion-thumbnail slot="start">
-                        <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-                      </ion-thumbnail>
-                      <ion-label>Item</ion-label>
-                    </ion-item>
-              
-                    <ion-item lines="none">
-                      <ion-thumbnail slot="start">
-                        <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-                      </ion-thumbnail>
-                      <ion-label>Item</ion-label>
-                    </ion-item>
+                    <draggable
+                      class="list-group"
+                      :list="list1"
+                      group="people"
+                      @change="log"
+                      itemKey="name"
+                    >
+                    <template #item="{ element, index }">
+                      <ion-item class="list-group-item">
+                          <ion-thumbnail slot="start">
+                            <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+                          </ion-thumbnail>
+                          <ion-label>{{ element.name }} {{ index }}</ion-label>
+                      </ion-item>
+                    </template>
+                    </draggable>
                   </ion-list>
                 </ion-card-content>
               </ion-card>
-                          </ion-col>
-                          <ion-col class="ion-text-center">
+              </ion-col>
+              <ion-col class="ion-text-center">
                <ion-card>
                 <ion-card-header>
                   <ion-card-title>Discussing</ion-card-title>
@@ -78,28 +53,27 @@
                 </ion-card-header>
                 <ion-card-content>
                   <ion-list>
-                            <draggable
-        class="list-group"
-        :list="list2"
-        group="people"
-        @change="log"
-        itemKey="name"
-      >
-        <template #item="{ element, index }">
-          <ion-item class="list-group-item">
-     
-            <ion-thumbnail slot="start">
-                        <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-                      </ion-thumbnail>
-                      <ion-label>{{ element.name }} {{ index }}</ion-label>
-          </ion-item>
-        </template>
-      </draggable>
+                    <draggable
+                      class="list-group"
+                      :list="list2"
+                      group="people"
+                      @change="log"
+                      itemKey="name"
+                    >
+                      <template #item="{ element, index }">
+                        <ion-item class="list-group-item">
+                          <ion-thumbnail slot="start">
+                          <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+                          </ion-thumbnail>
+                          <ion-label>{{ element.name }} {{ index }}</ion-label>
+                        </ion-item>
+                      </template>
+                    </draggable>
                     </ion-list>
                   </ion-card-content>
                 </ion-card>
                 </ion-col>
-                          <ion-col class="ion-text-center">
+              <ion-col class="ion-text-center">
               <ion-card>
                 <ion-card-header>
                   <ion-card-title>Discussed</ion-card-title>
@@ -107,33 +81,22 @@
                 </ion-card-header>
                 <ion-card-content>
                   <ion-list>
-                    <ion-item>
-                      <ion-thumbnail slot="start">
-                        <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-                      </ion-thumbnail>
-                      <ion-label>Item</ion-label>
-                    </ion-item>
-              
-                    <ion-item>
-                      <ion-thumbnail slot="start">
-                        <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-                      </ion-thumbnail>
-                      <ion-label>Item</ion-label>
-                    </ion-item>
-              
-                    <ion-item>
-                      <ion-thumbnail slot="start">
-                        <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-                      </ion-thumbnail>
-                      <ion-label>Item</ion-label>
-                    </ion-item>
-              
-                    <ion-item lines="none">
-                      <ion-thumbnail slot="start">
-                        <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-                      </ion-thumbnail>
-                      <ion-label>Item</ion-label>
-                    </ion-item>
+                                        <draggable
+                      class="list-group"
+                      :list="list3"
+                      group="people"
+                      @change="log"
+                      itemKey="name"
+                    >
+                      <template #item="{ element, index }">
+                        <ion-item class="list-group-item">
+                          <ion-thumbnail slot="start">
+                          <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+                          </ion-thumbnail>
+                          <ion-label>{{ element.name }} {{ index }}</ion-label>
+                        </ion-item>
+                      </template>
+                    </draggable>
                   </ion-list>
                 </ion-card-content>
                 </ion-card>
@@ -146,33 +109,22 @@
                 </ion-card-header>
                 <ion-card-content>
                   <ion-list>
-                    <ion-item>
-                      <ion-thumbnail slot="start">
-                        <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-                      </ion-thumbnail>
-                      <ion-label>Item</ion-label>
-                    </ion-item>
-              
-                    <ion-item>
-                      <ion-thumbnail slot="start">
-                        <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-                      </ion-thumbnail>
-                      <ion-label>Item</ion-label>
-                    </ion-item>
-              
-                    <ion-item>
-                      <ion-thumbnail slot="start">
-                        <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-                      </ion-thumbnail>
-                      <ion-label>Item</ion-label>
-                    </ion-item>
-              
-                    <ion-item lines="none">
-                      <ion-thumbnail slot="start">
-                        <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-                      </ion-thumbnail>
-                      <ion-label>Item</ion-label>
-                    </ion-item>
+                                                            <draggable
+                      class="list-group"
+                      :list="list4"
+                      group="people"
+                      @change="log"
+                      itemKey="name"
+                    >
+                      <template #item="{ element, index }">
+                        <ion-item class="list-group-item">
+                          <ion-thumbnail slot="start">
+                          <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+                          </ion-thumbnail>
+                          <ion-label>{{ element.name }} {{ index }}</ion-label>
+                        </ion-item>
+                      </template>
+                    </draggable>
                   </ion-list>
                 </ion-card-content>
                 </ion-card>
@@ -218,24 +170,18 @@
       IonCardContent,
       IonCardHeader,
       IonCardSubtitle,
-      IonCardTitle, 
-      IonReorder, 
-      IonReorderGroup
+      IonCardTitle
     },
     setup() {
-      const handleReorder = (event: CustomEvent) => {
-          event.detail.complete();
-      };
       return {
         router: useRouter(),
         add, 
-        handleReorder,
       }
     },
       data() {
     return {
       list1: [
-        { name: "John", id: 1 },
+        { name: "this is a test of an idea of something that someone might have", id: 1 },
         { name: "Joao", id: 2 },
         { name: "Jean", id: 3 },
         { name: "Gerard", id: 4 }
@@ -244,7 +190,24 @@
         { name: "Juan", id: 5 },
         { name: "Edgard", id: 6 },
         { name: "Johnson", id: 7 }
-      ]
+      ],
+      list3: [
+        {
+          name: "abie", id: 8
+        },
+        {
+          name: "kayla", id:9
+        },
+        {
+          name: "daisy", id: 10
+        }
+        ], 
+      list4: [
+        {name: "Marion", id: 11},
+        {name: "Rob", id: 12},
+        {name:"Marcy", id: 13},
+        {name: "Ken", id: 14}
+        ]
     };
   },
   methods: {
