@@ -2,11 +2,17 @@ import { createRouter, createWebHistory } from '@ionic/vue-router';
 import HomeView from "../views/HomeView.vue";
 import NewItem from "../views/NewItem.vue";
 import AuthView from "../views/AuthView.vue";
+import AgileCoffeeView from "../views/AgileCoffeeView.vue"
  const routes = [
     {
       path: "/",
-      name: "home",
-      component: HomeView,
+      name: "HomeView",
+      component: HomeView
+    },
+    {
+      path: "/agilecoffee",
+      name: "AgileCoffee",
+      component: AgileCoffeeView,
     },
     {
       path: "/about",

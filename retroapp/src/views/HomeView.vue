@@ -3,188 +3,138 @@
     <ion-menu content-id="main-content">
     <ion-header>
       <ion-toolbar>
-        <ion-title>Menu Content</ion-title>
+        <ion-title>Retro Doctor</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content class="ion-padding">This is the menu content.</ion-content>
+    <ion-content class="ion-padding">
+      <ion-list>
+        <ion-item>
+          Home
+        </ion-item>
+        <ion-item>
+          My Retros
+        </ion-item>
+      </ion-list>
+    </ion-content>
   </ion-menu>
   <ion-page id="main-content">
-         <ion-header>
+    <ion-header>
       <ion-toolbar>
         <ion-buttons slot="start">
           <ion-menu-button></ion-menu-button>
         </ion-buttons>
-        <ion-title>Menu</ion-title>
+        <ion-title>Retro Doctor</ion-title>
         <ion-buttons slot="end">
           <ion-chip>
-            
-
-        <ion-avatar>
-          <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-        </ion-avatar>
-        <ion-label>
-          {{this.auth.user.username}}
-        </ion-label>
-                  </ion-chip>
+            <ion-avatar>
+              <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+            </ion-avatar>
+            <ion-label>
+              {{this.auth.user.username}}
+            </ion-label>
+          </ion-chip>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
-    <!--<ion-header :translucent="true">-->
-    <!--  <ion-toolbar>-->
-    <!--    <ion-title>Retro Doctor</ion-title>-->
-    <!--    {{ this.auth.user.username }}-->
-    <!--  </ion-toolbar>-->
-    <!--</ion-header>-->
-
-    <ion-content class="ion-padding">
-
+  <ion-content class="ion-padding">
       <ion-grid>
           <ion-row>
-            <ion-col class="ion-text-center">
-              <ion-card>
-                <ion-card-header>
-                  <ion-card-title>Topics</ion-card-title>
-                  <ion-card-subtitle>What's on your mind?</ion-card-subtitle>
-                </ion-card-header>
-  
-
-        <template #item="{ element, index }">
-          <div class="list-group-item">{{ element.name }} {{ index }}</div>
-        </template>
-
-
-                <ion-card-content>
-                  <ion-list>
-                    <draggable
-                      class="list-group"
-                      :list="list1"
-                      group="people"
-                      @change="log"
-                      itemKey="name"
-                    >
-                    <template #item="{ element, index }">
-                      <ion-item class="list-group-item">
-                          <ion-thumbnail slot="start">
-                            <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-                          </ion-thumbnail>
-                          <ion-note><p>{{ element.name }} {{ index }}</p></ion-note>
-                      </ion-item>
-                    </template>
-                    </draggable>
-                  </ion-list>
-                </ion-card-content>
-              </ion-card>
-              </ion-col>
-              <ion-col class="ion-text-center">
-               <ion-card>
-                <ion-card-header>
-                  <ion-card-title>Discussing</ion-card-title>
-                  <ion-card-subtitle>Everyone Contribute!</ion-card-subtitle>
-                </ion-card-header>
-                <ion-card-content>
-                  <ion-list>
-                    <draggable
-                      class="list-group"
-                      :list="list2"
-                      group="people"
-                      @change="log"
-                      itemKey="name"
-                    >
-                      <template #item="{ element, index }">
-                        <ion-item class="list-group-item">
-                          <ion-thumbnail slot="start">
-                          <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-                          </ion-thumbnail>
-                          <ion-note>{{ element.name }} {{ index }}</ion-note>
-                        </ion-item>
-                      </template>
-                    </draggable>
-                    </ion-list>
-                  </ion-card-content>
-                </ion-card>
-                </ion-col>
-              <ion-col class="ion-text-center">
-              <ion-card>
-                <ion-card-header>
-                  <ion-card-title>Discussed</ion-card-title>
-                  <ion-card-subtitle>What'd we talk about?</ion-card-subtitle>
-                </ion-card-header>
-                <ion-card-content>
-                  <ion-list>
-                                        <draggable
-                      class="list-group"
-                      :list="list3"
-                      group="people"
-                      @change="log"
-                      itemKey="name"
-                    >
-                      <template #item="{ element, index }">
-                        <ion-item class="list-group-item">
-                          <ion-thumbnail slot="start">
-                          <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-                          </ion-thumbnail>
-                          <ion-note>{{ element.name }} {{ index }}</ion-note>
-                        </ion-item>
-                      </template>
-                    </draggable>
-                  </ion-list>
-                </ion-card-content>
-                </ion-card>
-                          </ion-col>
-                          <ion-col class="ion-text-center">
-              <ion-card>
-                <ion-card-header>
-                  <ion-card-title>Action Item</ion-card-title>
-                  <ion-card-subtitle>Let's do something about it</ion-card-subtitle>
-                </ion-card-header>
-                <ion-card-content>
-                  <ion-list>
-                                                            <draggable
-                      class="list-group"
-                      :list="list4"
-                      group="people"
-                      @change="log"
-                      itemKey="name"
-                    >
-                      <template #item="{ element, index }">
-                        <ion-item class="list-group-item">
-                          <ion-thumbnail slot="start">
-                          <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-                          </ion-thumbnail>
-                          <ion-note>{{ element.name }} {{ index }}</ion-note>
-                        </ion-item>
-                      </template>
-                    </draggable>
-                  </ion-list>
-                </ion-card-content>
-                </ion-card>
+              <ion-col>
+                <ion-button id="open-modal">Create retro</ion-button>
+            </ion-col>
+            <ion-button @click="listCreators">create Creator</ion-button>
+            <ion-col>
+                <h1>{{this.auth.user.username}}'s Retros</h1>
             </ion-col>
           </ion-row>
       </ion-grid>
-      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-        <ion-fab-button @click="() => router.push('/new')">
-          <ion-icon :icon="add"></ion-icon>
-        </ion-fab-button>
-      </ion-fab>
-    </ion-content>
-  </ion-page>
-</template>
+    <ion-col><ion-list v-for="item in retros" :key="item.id">
+            <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{item.title}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div>Created at {{item.createdAt}}</div>
+      <div>Participants</div>
+      <div>Template</div>
+    </ion-card-content>
+  </ion-card>
+    </ion-list></ion-col>
+    <ion-modal ref="modal" trigger="open-modal">
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button @click="cancel()">Cancel</ion-button>
+          </ion-buttons>
+          <ion-title>Create New Retro</ion-title>
+          <ion-buttons slot="end">
+            <ion-button :strong="true" @click="confirm()">Create</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-item>
+          <ion-input ref="input" type="text" placeholder="Retro Name"></ion-input>
 
-<script lang="ts">
-  import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonIcon, IonCol, IonGrid, IonRow, IonList,  IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle,  IonReorder, IonReorderGroup, IonMenu, IonMenuButton   } from '@ionic/vue';
+        </ion-item>
+        <ion-item>
+            <ion-select placeholder="Retro Template">
+            <ion-select-option value="Custom">Custom</ion-select-option>
+            <ion-select-option value="Agile Coffee">Agile Coffee</ion-select-option>
+            <ion-select-option value="Start Stop Continue">Start Stop Continue</ion-select-option>
+          </ion-select>
+         </ion-item>
+      </ion-content>
+    </ion-modal>
+  </ion-content>
+</ion-page>
+</template>
+<script lang='ts'>
+  import { 
+      IonSelect, IonSelectOption,
+      IonContent, 
+        IonHeader, 
+        IonPage, 
+        IonTitle, 
+        IonToolbar, 
+        IonFab, 
+        IonFabButton, 
+        IonIcon, 
+        IonCol, 
+        IonGrid, 
+        IonRow, 
+        IonList,
+        IonCard, 
+        IonCardContent, 
+        IonCardHeader, 
+        IonCardSubtitle, 
+        IonCardTitle,  
+        IonReorder, 
+        IonReorderGroup,
+        IonMenu, 
+        IonMenuButton,
+        IonButtons,
+        IonButton,
+        IonModal,
+        IonInput,
+  } from '@ionic/vue';
   import { Authenticator,useAuthenticator } from '@aws-amplify/ui-vue';
-  import { defineComponent } from 'vue';
+    import { API } from 'aws-amplify';
+  import { createRetro, createCreator } from '../graphql/mutations';
+    import { listRetros, getCreator,listCreators } from '../graphql/queries';
+  import { defineComponent, ref } from 'vue';
+    import { OverlayEventDetail } from '@ionic/core/components';
   import { add } from 'ionicons/icons';
   import { useRouter } from 'vue-router';
-  
-  import draggable from 'vuedraggable';
   const auth = useAuthenticator();
   export default defineComponent({
-    name: 'Home',
-    display: "Two Lists",
-    order: 1,
+    name: 'HomeView',
     components: {
-      draggable,
+        IonButtons,
+        IonButton,
+        IonModal,
+        IonInput,
+        IonSelect, IonSelectOption,
       IonContent,
       IonFab,
       IonFabButton,
@@ -211,84 +161,91 @@
         add, 
       }
     },
-      data() {
-    return {
-      auth: auth,
-      list1: [
-        { name: "this is a test of an idea of something that someone might have", id: 1 },
-        { name: "Joao", id: 2 },
-        { name: "Jean", id: 3 },
-        { name: "Gerard", id: 4 }
-      ],
-      list2: [
-        { name: "Juan", id: 5 },
-        { name: "Edgard", id: 6 },
-        { name: "Johnson", id: 7 }
-      ],
-      list3: [
-        {
-          name: "abie", id: 8
-        },
-        {
-          name: "kayla", id:9
-        },
-        {
-          name: "daisy", id: 10
+    async created() {
+      this.getRetros();
+    },
+    data() {
+        return {
+          auth: auth,
+          title: '',
+          retros: [],
+          creator: {}
         }
-        ], 
-      list4: [
-        {name: "this is a note that is a note an is an note and stuff, how big should I make this note? Can I keep going and going and going?", id: 11},
-        {name: "Rob", id: 12},
-        {name:"Marcy", id: 13},
-        {name: "Ken", id: 14}
-        ]
-    };
-  },
-  methods: {
-    add: function() {
-      this.list.push({ name: "Juan" });
-    },
-    replace: function() {
-      this.list = [{ name: "Edgard" }];
-    },
-    clone: function(el) {
-      return {
-        name: el.name + " cloned"
-      };
-    },
-    log: function(evt) {
-      window.console.log(evt);
-    }
-  }
-  });
+      },
+      methods: {
+            async getRetros() {
+                const retros = await API.graphql({
+                query: listRetros
+            });
+            this.retros = retros.data.listRetros.items;
+            console.log(this.auth.user.attributes.email)
+            //console.log(this.retros.data.listRetros.items)
+        },
+        async createCreator(){
+            const username = this.auth.user.username
+            const accountID = this.auth.user.attributes.email
+            const user = { username, accountID } 
+            const creator = await API.graphql({
+                query: createCreator,
+                variables: { input: user }
+            });
+            console.log(creator.data)
+        },
+        async getCreator(){
+          const username = this.auth.user.username
+          const creator = await API.graphql({
+                query: getCreator,
+                variables: {username: username}
+              })
+              console.log(creator.data.items)
+              //this.creator = creator.data
+        },
+        async getCreators() {
+          let filter = { username: {
+            eq: this.auth.user.username 
+          }
+          }
+          const creators = await API.graphql({
+            query: listCreators,
+            variables: {filter: filter}
+          });
+          console.log(creators);
+        },
+            async createRetro() {
+                const { title } = this;
+                if (!title) return;
+                const retro = { title };
+                await API.graphql({
+                  query: createRetro,
+                  variables: { input: retro }
+                });
+                this.title = '';
+              },
+              
+            // async createCreator() {
+            //     const creator = { username };
+            //     await API.graphql({
+            //       query: createCreator,
+            //       variables: { input: creator }
+            //     });
+            //     this.username = '';
+            //   },
+          cancel() {
+            this.$refs.modal.$el.dismiss(null, 'cancel');
+          },
+          confirm() {
+            const title = this.$refs.input.$el.value;
+            this.$refs.modal.$el.dismiss(title, 'confirm');
+            this.title = title;
+            this.createRetro();
+            this.$router.push('/agilecoffee');
+          },
+          onWillDismiss(ev: CustomEvent<OverlayEventDetail>) {
+            if (ev.detail.role === 'confirm') {
+              this.message = `Hello, ${ev.detail.data}!`;
+            }
+          }
+      },
+      
+  })
 </script>
-
-<style scoped>
-  #container {
-    text-align: center;
-
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-
-  #container strong {
-    font-size: 20px;
-    line-height: 26px;
-  }
-
-  #container p {
-    font-size: 16px;
-    line-height: 22px;
-
-    color: #8c8c8c;
-
-    margin: 0;
-  }
-
-  #container a {
-    text-decoration: none;
-  }
-</style>
