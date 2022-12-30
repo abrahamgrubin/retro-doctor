@@ -13,6 +13,10 @@ export default defineComponent({
     IonRouterOutlet,
     Authenticator
   },
+  methods: {
+    signIn: {},
+    getCreator: {}
+  },
   data(){
     return {
       auth: auth

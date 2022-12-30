@@ -7,7 +7,7 @@ import AgileCoffeeView from "../views/AgileCoffeeView.vue"
     {
       path: "/",
       name: "HomeView",
-      component: HomeView
+      component: () => import("../views/HomeView.vue")
     },
     {
       path: "/agilecoffee",
