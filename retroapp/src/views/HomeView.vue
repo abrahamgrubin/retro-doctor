@@ -33,9 +33,7 @@
               {{this.auth.user.username}}
             </ion-label>
           </ion-chip>
-          <!--<ion-button fill="outline" shape="round" @click="auth.signOut">Sign Out</ion-button>-->
-          <ion-button fill="outline" shape="round" @click="getOrCreateCreator">Get creator</ion-button>
-          <!--<ion-button fill="outline" shape="round" @click="deleteCreator">delete creator</ion-button>-->
+          <ion-button fill="outline" shape="round" @click="auth.signOut">Sign Out</ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
@@ -45,10 +43,6 @@
               <ion-col>
                 <ion-button id="open-modal">Create retro</ion-button>
             </ion-col>
-            <!--<ion-button @click="listCreators">create Creator</ion-button>-->
-            <!--<ion-col>-->
-            <!--    <h1>{{this.auth.user.username}}'s Retros</h1>-->
-            <!--</ion-col>-->
           </ion-row>
       </ion-grid>
       <ion-grid>
@@ -173,7 +167,7 @@
     },
     async created() {
       this.getOrCreateCreator();
-      this.getRetros();
+
     },
     data() {
         return {
@@ -186,13 +180,17 @@
         }
       },
       methods: {
-            async getRetros() {
+            async getRetros(userid) {
+                let filter = { retroCreatorId: {
+                  eq: userid
+                } 
+                  
+                }
                 const retros = await API.graphql({
-                query: listRetros
+                query: listRetros,
+                variables: { filter: filter}
             });
-            this.retros = retros.data.listRetros.items;
-            console.log(this.retros)
-            // refactor this to only include creator's retros
+            this.retros = retros.data.listRetros.items
         },
         signout(){
           return this.auth.signout()
@@ -206,7 +204,6 @@
                 query: createCreator,
                 variables: { input: user }
             });
-            console.log(creator) 
         },
         async getOrCreateCreator(){
           let filter = {
@@ -218,14 +215,11 @@
                 variables: { filter: filter}
               })
               if (creator.data.listCreators.items.length > 0) {
-                this.creator = creator.data.listCreators.items[4]
-                // debugger;
-                // this.retros = this.creator.retros
-                console.log(this.creator)
+                this.creator = creator.data.listCreators.items[0]
+                this.getRetros(this.creator.id);
               } else {
                 this.createCreator();
               }
-              
         },
         async deleteCreator(){
           const creator = this.creators[0]
@@ -256,9 +250,6 @@
                   query: createRetro,
                   variables: { input: retro }
                 });
-                console.log(createdRetro);
-                // this.title = '';
-                //this.updateRetro();
               },
             async createCreator() {
                 const username = this.auth.user.username
@@ -278,7 +269,7 @@
             this.title = title
             this.template= template
             this.createRetro();
-            
+            // add in the route below
             //this.$router.push('this.auth.user.username/{{this.createdRetroID}}/{{this.template}}');
           },
           onWillDismiss(ev: CustomEvent<OverlayEventDetail>) {
