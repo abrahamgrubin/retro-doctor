@@ -3,11 +3,17 @@ import HomeView from "../views/HomeView.vue";
 import NewItem from "../views/NewItem.vue";
 import AuthView from "../views/AuthView.vue";
 import AgileCoffeeView from "../views/AgileCoffeeView.vue"
+import RetroView from '../views/RetroView.vue'
  const routes = [
     {
       path: "/",
       name: "HomeView",
       component: () => import("../views/HomeView.vue")
+    },
+    {
+      path: "/:userid/retro/:retroid/:template/",
+      name: "RetroView",
+      component: RetroView
     },
     {
       path: "/agilecoffee",

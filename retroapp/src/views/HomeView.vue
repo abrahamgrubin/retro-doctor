@@ -83,9 +83,9 @@
         </ion-item>
         <ion-item>
             <ion-select placeholder="Retro Template" ref="template">
-            <ion-select-option value="Custom">Custom</ion-select-option>
-            <ion-select-option value="Agile Coffee">Agile Coffee</ion-select-option>
-            <ion-select-option value="Start Stop Continue">Start Stop Continue</ion-select-option>
+            <ion-select-option value="custom">Custom</ion-select-option>
+            <ion-select-option value="agile_coffee">Agile Coffee</ion-select-option>
+            <ion-select-option value="start_stop_continue">Start Stop Continue</ion-select-option>
           </ion-select>
          </ion-item>
       </ion-content>
@@ -250,6 +250,8 @@
                   query: createRetro,
                   variables: { input: retro }
                 });
+                console.log(createdRetro)
+                this.$router.push(this.auth.user.username + '/retro/' + createdRetro.data.createRetro.id + '/' + createdRetro.data.createRetro.template + '/');
               },
             async createCreator() {
                 const username = this.auth.user.username
@@ -270,7 +272,6 @@
             this.template= template
             this.createRetro();
             // add in the route below
-            //this.$router.push('this.auth.user.username/{{this.createdRetroID}}/{{this.template}}');
           },
           onWillDismiss(ev: CustomEvent<OverlayEventDetail>) {
             if (ev.detail.role === 'confirm') {
