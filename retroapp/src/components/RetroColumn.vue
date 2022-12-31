@@ -1,10 +1,9 @@
 <template>
- <ion-row>
     <ion-col class="ion-text-center">
               <ion-card>
                 <ion-card-header>
-                  <!--<ion-card-title>{{ this.retrodata[0].title }}</ion-card-title>-->
-                  <!--<ion-card-subtitle>{{ this.retrodata[0].subtitle }}</ion-card-subtitle>-->
+                  <ion-card-title>{{ this.retrodata.title }}</ion-card-title>
+                  <ion-card-subtitle>{{ this.retrodata.subtitle }}</ion-card-subtitle>
                 </ion-card-header>
                 <template #item="{ element, index }">
                   <div class="list-group-item">{{ element.name }} {{ index }}</div>
@@ -31,7 +30,6 @@
                 </ion-card-content>
               </ion-card>
               </ion-col>
-               </ion-row>
 </template>
 <script>
   import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonIcon, IonCol, IonGrid, IonRow, IonList,  IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle,  IonReorder, IonReorderGroup, IonMenu, IonMenuButton   } from '@ionic/vue';
@@ -88,6 +86,7 @@ export default defineComponent({
         { name: "Jean", id: 3 },
         { name: "Gerard", id: 4 }
       ]
+          
     }
   },
   methods: {
