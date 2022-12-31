@@ -38,6 +38,8 @@
     </ion-header>
     <ion-content class="ion-padding">
       <ion-grid>
+        <!--<div> filter, then pass it</div>-->
+        <RetroColumn/>
           <ion-row>
             <ion-col class="ion-text-center">
               <ion-card>
@@ -75,11 +77,10 @@
                 <ion-card-header>
                   <ion-card-title>Discussing</ion-card-title>
                   <ion-card-subtitle>Everyone Contribute!</ion-card-subtitle>
-                  <RetroColumn />
+                  
                 </ion-card-header>
                 <ion-card-content>
                   <ion-list>
-                    
                     <draggable
                       class="list-group"
                       :list="list2"
@@ -206,6 +207,7 @@
       IonCardTitle, 
       IonMenu, 
       IonMenuButton,
+      RetroColumn
     },
     setup() {
       return {
@@ -213,12 +215,21 @@
         add, 
       }
     },
+    created(){
+      this.getTemplate()
+    },
       data() {
     return {
       auth: auth,
-      tempalates: [
+      columndata: {},
+      templates: [
           { name: 'Custom', columns:[], slug: 'custom' },
-          { name: 'Agile Coffee', columns: ['Topics','Discussing','Discussed','Action Items'], slug: 'agile_coffee'},
+          { name: 'Agile Coffee', columns: [
+            { title: 'Topics', subtitle: 'placeholder' },
+            { title: 'Discussing',subtitle: 'placeholder' },
+            { title: 'Discussed', subtitle: 'placeholder' },
+            { title: 'Action Items', subtitle: 'placeholder' }
+            ], slug: 'agile_coffee'},
           { name: 'Start Stop Contine', columns: ['Start', 'Stop', 'Continue', 'Action Items'], slug:'start_stop_continue'},
       ],
       list1: [
@@ -256,7 +267,8 @@
       this.list.push({ name: "Juan" });
     },
     getTemplate() {
-        console.log(this, props);
+        const stuff = this.templates.filter(template => template.slug)
+        console.log(stuff);
     }
   }
   });
