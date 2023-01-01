@@ -7,16 +7,19 @@
     item-key="name"
   >
     <template #item="{ element }">
-      <li>
-        <p>{{ element.name }}</p>
+      <ion-item>
+        <ion-thumbnail slot="start">
+            <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+        </ion-thumbnail>
+        <ion-label>{{ element.name }}</ion-label>
         <nested-draggable :tasks="element.tasks" />
-      </li>
+      </ion-item>
     </template>
   </draggable>
 </template>
 <script>
 import draggable from "vuedraggable";
-
+import {IonCardContent, IonList, IonItem, IonThumbnail, IonLabel} from '@ionic/vue';
 export default {
   props: {
     tasks: {
@@ -25,7 +28,7 @@ export default {
     }
   },
   components: {
-    draggable
+    draggable, IonCardContent, IonList, IonItem, IonThumbnail, IonLabel
   },
   name: "nested-draggable"
 };
@@ -33,6 +36,8 @@ export default {
 <style scoped>
 .dragArea {
   min-height: 50px;
-  outline: 1px dashed;
+  min-width: 50%;
+  border: solid;
+  display: block;
 }
 </style>

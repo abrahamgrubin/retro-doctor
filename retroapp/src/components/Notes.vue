@@ -1,28 +1,32 @@
 <template>
-  <div class="row">
-    <div class="col-8">
       <h3>Nested draggable</h3>
+  <ion-card-content>
+    <ion-list>
       <nested-draggable :tasks="list" />
-    </div>
+    </ion-list>
+        
+  </ion-card-content>
+  <rawDisplayer :value="list" title="List" />
 
-    <rawDisplayer class="col-3" :value="list" title="List" />
-  </div>
+
+
 </template>
 
 <script>
 import nestedDraggable from "./NestedDraggable.vue";
+import {IonCardContent, IonList} from '@ionic/vue';
 export default {
   name: "nested-example",
   display: "Nested",
   order: 15,
   components: {
-    nestedDraggable
+    nestedDraggable, IonCardContent,IonList
   },
   data() {
-    return {
+   return {
       list: [
-        {
-          name: "task 1",
+                {
+          name: "THis is a note",
           tasks: [
             {
               name: "task 2",
@@ -35,7 +39,6 @@ export default {
           tasks: [
             {
               name: "task 4",
-              tasks: []
             }
           ]
         },
@@ -45,7 +48,7 @@ export default {
         }
       ]
     };
-  }
+  } 
 };
 </script>
 <style scoped></style>
