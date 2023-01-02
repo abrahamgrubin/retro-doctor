@@ -289,6 +289,7 @@ export const listParticipants = /* GraphQL */ `
     }
   }
 `;
+
 export const getCreator = /* GraphQL */ `
   query GetCreator($id: ID!) {
     getCreator(id: $id) {
