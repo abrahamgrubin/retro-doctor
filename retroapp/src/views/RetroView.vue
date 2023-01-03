@@ -3,7 +3,7 @@
     <Retro :template='this.template'/>
 </template>
 <script>
-    import { defineComponent, ref } from 'vue';
+    import { defineComponent } from 'vue';
     import  Retro from '../components/Retro.vue';
     import { useRouter } from 'vue-router';
     export default defineComponent({
@@ -15,7 +15,6 @@
         created(){
             this.getTemplate()
         },
-        
         components: {
             Retro
         }, 

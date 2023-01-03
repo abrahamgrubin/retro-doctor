@@ -37,14 +37,13 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-
-      <ion-modal ref="modal" trigger="open-modal" @willDismiss="onWillDismiss">
+      <ion-modal ref="modal2" trigger="open-modal" @willDismiss="onWillDismiss">
         <ion-header>
           <ion-toolbar>
             <ion-buttons slot="start">
               <ion-button @click="cancel()">Cancel</ion-button>
             </ion-buttons>
-            <ion-title>Welcome</ion-title>
+            <ion-title>Create Topic</ion-title>
             <ion-buttons slot="end">
               <ion-button :strong="true" @click="confirm()">Confirm</ion-button>
             </ion-buttons>
@@ -52,8 +51,8 @@
         </ion-header>
         <ion-content class="ion-padding">
           <ion-item>
-            <ion-label position="stacked">Enter your name</ion-label>
-            <ion-input ref="input" type="text" placeholder="Your name"></ion-input>
+            <ion-label position="stacked">Note</ion-label>
+            <ion-textarea ref="stud" placeholder="Text"></ion-textarea>
           </ion-item>
         </ion-content>
       </ion-modal>
@@ -73,7 +72,7 @@
 
 <script lang='ts'>
   import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonIcon, IonCol, IonGrid, IonRow, IonList,  IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle,  IonReorder, IonReorderGroup, IonMenu, IonMenuButton, IonModal, IonButtons, IonButton   } from '@ionic/vue';
-    import { OverlayEventDetail } from '@ionic/core/components';
+  import { OverlayEventDetail } from '@ionic/core/components';
   import { Authenticator,useAuthenticator } from '@aws-amplify/ui-vue';
   import { defineComponent, defineProps, ref } from 'vue';
   import { add } from 'ionicons/icons';
@@ -81,6 +80,7 @@
   import RetroColumn from './RetroColumn.vue';
   import { API } from 'aws-amplify';
   import { createNote } from '../graphql/mutations';
+  import { getRetro } from '../graphql/queries';
   import draggable from 'vuedraggable';
   const auth = useAuthenticator();
   defineProps({
@@ -123,13 +123,11 @@
         add, 
       }
     },
-    created(){
-      this.getTemplate()
-    },
-      data() {
+    data() {
     return {
       auth: auth,
       columndata: {},
+      retro: {},
       templates: [
           { name: 'Custom', columns:[], slug: 'custom' },
           { name: 'Agile Coffee', columns: [
@@ -170,16 +168,36 @@
         ]
     };
   },
+  async created(){
+    this.getRetro()
+  },
   methods: {
-    add: function() {
-      this.list.push({ name: "Juan" });
-    },
+    // add: function() {
+    //   this.list.push({ name: "Juan" });
+    // },
     cancel() {
-        this.$refs.modal.$el.dismiss(null, 'cancel');
+        this.$refs.modal2.$el.dismiss(null, 'cancel');
       },
-      confirm() {
-        const name = this.$refs.input.$el.value;
-        this.$refs.modal.$el.dismiss(name, 'confirm');
+     async getRetro() {
+       const id = this.$route.params.retroid;
+        const retro = await API.graphql({
+          query: getRetro,
+          variables: { id: id }
+        });
+      this.retro = retro.data.getRetro
+      console.log(this.retro, this.$route.params.retroid)
+     },
+      async confirm() {
+        const content = this.$refs.stud.value;
+        // const id = this.$route.params.retroid;
+        const retroNotesId = this.retro.id;
+        const input = { content, retroNotesId }
+        const note = await API.graphql({
+          query: createNote,
+          variables: { input: input}
+        });
+        console.log(note)
+        this.$refs.modal2.$el.dismiss(content, 'confirm');
       },
       onWillDismiss(ev: CustomEvent<OverlayEventDetail>) {
         if (ev.detail.role === 'confirm') {
@@ -188,9 +206,7 @@
       },
     async createNote() {
       const id = this.$route.params.retroid
-      // const content = this.content;
-      const content = "newestNote";
-      const input = {content, retro}
+      const input = {content}
       const note = await API.graphql({
         query: createNote,
         variables: { input: input}

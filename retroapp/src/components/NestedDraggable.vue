@@ -30,7 +30,12 @@ export default {
   components: {
     draggable, IonCardContent, IonList, IonItem, IonThumbnail, IonLabel
   },
-  name: "nested-draggable"
+  name: "nested-draggable",
+  methods: {
+    checkDepth() {
+      console.log(element.tasks)
+    }
+  }
 };
 </script>
 <style scoped>
