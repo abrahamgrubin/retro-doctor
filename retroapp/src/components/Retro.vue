@@ -81,6 +81,7 @@
   import { API } from 'aws-amplify';
   import { createNote } from '../graphql/mutations';
   import { getRetro } from '../graphql/queries';
+  import { onCreateNote } from '../graphql/subscriptions';
   import draggable from 'vuedraggable';
   const auth = useAuthenticator();
   defineProps({
@@ -128,6 +129,7 @@
       auth: auth,
       columndata: {},
       retro: {},
+      notes: [],
       templates: [
           { name: 'Custom', columns:[], slug: 'custom' },
           { name: 'Agile Coffee', columns: [
@@ -169,28 +171,29 @@
     };
   },
   async created(){
-    this.getRetro()
+    this.getTemplate(); 
+    this.subscribe();
   },
   methods: {
+    // I CAN GET RID OF FETCHING THE RETRO...WANT TO ADD Participants to Notes
     // add: function() {
     //   this.list.push({ name: "Juan" });
     // },
+    subscribe() {
+      API.graphql({ query: onCreateNote }).subscribe({
+        next:(eventData) => {
+          let note = eventData.value.data.onCreateNote;
+            if (this.notes.some((item) => item.id === note.id)) return; // remove duplications
+            this.notes = [...this.notes, note];
+        }
+      })
+    },
     cancel() {
         this.$refs.modal2.$el.dismiss(null, 'cancel');
       },
-     async getRetro() {
-       const id = this.$route.params.retroid;
-        const retro = await API.graphql({
-          query: getRetro,
-          variables: { id: id }
-        });
-      this.retro = retro.data.getRetro
-      console.log(this.retro, this.$route.params.retroid)
-     },
       async confirm() {
         const content = this.$refs.stud.value;
-        // const id = this.$route.params.retroid;
-        const retroNotesId = this.retro.id;
+        const retroNotesId = this.$route.params.retroid;
         const input = { content, retroNotesId }
         const note = await API.graphql({
           query: createNote,

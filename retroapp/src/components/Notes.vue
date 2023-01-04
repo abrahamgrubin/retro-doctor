@@ -36,7 +36,7 @@ export default {
         query: getRetro,
         variables: { id: id}
       });
-      console.log(retro.data.getRetro.notes.items);
+      console.log(retro.data.getRetro);
     }
   },
   async created() {
