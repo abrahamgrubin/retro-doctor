@@ -1,13 +1,12 @@
 <template>
     <ion-col class="ion-text-center">
-              <ion-card>
-                <ion-card-header>
-                  <ion-card-title>{{ this.retrodata.title }}</ion-card-title>
-                  <ion-card-subtitle>{{ this.retrodata.subtitle }}</ion-card-subtitle>
-                </ion-card-header>
-                <Notes />
-              </ion-card>      
-      
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>{{ this.retrodata.title }}</ion-card-title>
+          <ion-card-subtitle>{{ this.retrodata.subtitle }}</ion-card-subtitle>
+        </ion-card-header>
+        <Notes />
+      </ion-card>      
     </ion-col>
 </template>
 
@@ -24,7 +23,7 @@
   })
 export default defineComponent({
     name: 'RetroColumn',
-    display: "Two Lists",
+    display: "Retro Columns",
     props: ['retrodata'],
     order: 1,
     components: {
@@ -59,7 +58,7 @@ export default defineComponent({
     created(){
         this.getTemplate()
     },
-      data() {
+    data() {
     return {
       list1: [
         { name: "this is a test of an idea of something that someone might have", id: 1 },
@@ -76,7 +75,6 @@ export default defineComponent({
     },
     getTemplate() {
         console.log(this.$props.retrodata);
-        console.log(Notes)
     }
   }
   });

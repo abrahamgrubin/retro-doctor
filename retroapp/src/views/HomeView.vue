@@ -124,7 +124,7 @@
   } from '@ionic/vue';
   import { Authenticator,useAuthenticator } from '@aws-amplify/ui-vue';
     import { API } from 'aws-amplify';
-  import { createRetro, createCreator, deleteCreator } from '../graphql/mutations';
+  import { createRetro, createCreator, deleteCreator, createTemplate } from '../graphql/mutations';
     import { listRetros, getCreator,listCreators } from '../graphql/queries';
   import { defineComponent, ref } from 'vue';
     import { OverlayEventDetail } from '@ionic/core/components';
@@ -167,7 +167,7 @@
     },
     async created() {
       this.getOrCreateCreator();
-
+      this.createOrGetTemplates();
     },
     data() {
         return {
@@ -255,12 +255,27 @@
               },
             async createCreator() {
                 const username = this.auth.user.username
-                const creator = { username, accoutID };
+                const accountID = this.auth.user.attributes.email;
+                const creator = { username, accountID };
+                debugger;
                 await API.graphql({
                   query: createCreator,
                   variables: { input: creator }
                 });
               },
+           createOrGetTemplates(){
+             const agileCoffee = { name: 'Agile Coffee', slug: 'agile_coffee' }
+             const custom = { name: 'Custom', slug: 'custom' }
+             const startStopContinue = { name: 'Start Stop Continue', slug: 'start_stop_continue' }
+             this.createTemplate(agileCoffee)
+           },
+           async createTemplate(template){
+             const aTemplate= await API.graphql({
+                  query: createTemplate,
+                  variables: { input: template }
+                });
+              console.log(aTemplate);
+           },
           cancel() {
             this.$refs.modal.$el.dismiss(null, 'cancel');
           },

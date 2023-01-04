@@ -183,7 +183,6 @@
             this.notes = [...this.notes, note];
         }
       });
-      console.log(this.notes)
     },
     cancel() {
         this.$refs.modal2.$el.dismiss(null, 'cancel');

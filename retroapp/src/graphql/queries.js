@@ -175,22 +175,22 @@ export const getRetro = /* GraphQL */ `
         }
         nextToken
       }
-      notes {
-        items {
-          content
-          id
-          createdAt
-          updatedAt
-          retroNotesId
+      template {
+        name
+        slug
+        columns {
+          nextToken
         }
-        nextToken
+        id
+        createdAt
+        updatedAt
       }
-      template
       id
       createdAt
       updatedAt
       creatorRetrosId
       retroCreatorId
+      retroTemplateId
     }
   }
 `;
@@ -213,15 +213,110 @@ export const listRetros = /* GraphQL */ `
         participants {
           nextToken
         }
-        notes {
-          nextToken
+        template {
+          name
+          slug
+          id
+          createdAt
+          updatedAt
         }
-        template
         id
         createdAt
         updatedAt
         creatorRetrosId
         retroCreatorId
+        retroTemplateId
+      }
+      nextToken
+    }
+  }
+`;
+export const getTemplate = /* GraphQL */ `
+  query GetTemplate($id: ID!) {
+    getTemplate(id: $id) {
+      name
+      slug
+      columns {
+        items {
+          title
+          subtitle
+          id
+          createdAt
+          updatedAt
+          templateColumnsId
+        }
+        nextToken
+      }
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listTemplates = /* GraphQL */ `
+  query ListTemplates(
+    $filter: ModelTemplateFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listTemplates(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        name
+        slug
+        columns {
+          nextToken
+        }
+        id
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getColumn = /* GraphQL */ `
+  query GetColumn($id: ID!) {
+    getColumn(id: $id) {
+      title
+      subtitle
+      template {
+        name
+        slug
+        columns {
+          nextToken
+        }
+        id
+        createdAt
+        updatedAt
+      }
+      id
+      createdAt
+      updatedAt
+      templateColumnsId
+    }
+  }
+`;
+export const listColumns = /* GraphQL */ `
+  query ListColumns(
+    $filter: ModelColumnFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listColumns(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        title
+        subtitle
+        template {
+          name
+          slug
+          id
+          createdAt
+          updatedAt
+        }
+        id
+        createdAt
+        updatedAt
+        templateColumnsId
       }
       nextToken
     }
@@ -244,15 +339,29 @@ export const getParticipant = /* GraphQL */ `
         participants {
           nextToken
         }
-        notes {
-          nextToken
+        template {
+          name
+          slug
+          id
+          createdAt
+          updatedAt
         }
-        template
         id
         createdAt
         updatedAt
         creatorRetrosId
         retroCreatorId
+        retroTemplateId
+      }
+      notes {
+        items {
+          content
+          id
+          createdAt
+          updatedAt
+          participantNotesId
+        }
+        nextToken
       }
       id
       createdAt
@@ -273,12 +382,15 @@ export const listParticipants = /* GraphQL */ `
         accountID
         retro {
           title
-          template
           id
           createdAt
           updatedAt
           creatorRetrosId
           retroCreatorId
+          retroTemplateId
+        }
+        notes {
+          nextToken
         }
         id
         createdAt
@@ -289,19 +401,18 @@ export const listParticipants = /* GraphQL */ `
     }
   }
 `;
-
 export const getCreator = /* GraphQL */ `
   query GetCreator($id: ID!) {
     getCreator(id: $id) {
       retros {
         items {
           title
-          template
           id
           createdAt
           updatedAt
           creatorRetrosId
           retroCreatorId
+          retroTemplateId
         }
         nextToken
       }
@@ -338,32 +449,45 @@ export const getNote = /* GraphQL */ `
   query GetNote($id: ID!) {
     getNote(id: $id) {
       content
-      retro {
-        title
-        creator {
-          username
-          accountID
+      participant {
+        username
+        accountID
+        retro {
+          title
           id
           createdAt
           updatedAt
-        }
-        participants {
-          nextToken
+          creatorRetrosId
+          retroCreatorId
+          retroTemplateId
         }
         notes {
           nextToken
         }
-        template
         id
         createdAt
         updatedAt
-        creatorRetrosId
-        retroCreatorId
+        retroParticipantsId
+      }
+      column {
+        title
+        subtitle
+        template {
+          name
+          slug
+          id
+          createdAt
+          updatedAt
+        }
+        id
+        createdAt
+        updatedAt
+        templateColumnsId
       }
       id
       createdAt
       updatedAt
-      retroNotesId
+      participantNotesId
     }
   }
 `;
@@ -376,19 +500,26 @@ export const listNotes = /* GraphQL */ `
     listNotes(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         content
-        retro {
-          title
-          template
+        participant {
+          username
+          accountID
           id
           createdAt
           updatedAt
-          creatorRetrosId
-          retroCreatorId
+          retroParticipantsId
+        }
+        column {
+          title
+          subtitle
+          id
+          createdAt
+          updatedAt
+          templateColumnsId
         }
         id
         createdAt
         updatedAt
-        retroNotesId
+        participantNotesId
       }
       nextToken
     }

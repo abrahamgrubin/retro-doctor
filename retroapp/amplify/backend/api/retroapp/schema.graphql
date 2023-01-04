@@ -21,19 +21,30 @@ type Comment @model {
   content: String!
 }
 
-type Retro @model @auth(rules: [{ allow: owner, ownerField: "participants" }]) {
+type Retro @model {
   title: String!
   creator: Creator @hasOne
   participants: [Participant] @hasMany
-  notes: [Note] @hasMany
-  template: String
+  template: Template @hasOne
 }
 
+type Template @model{
+  name: String!
+  slug: String!
+  columns: [Column] @hasMany
+}
+
+type Column @model {
+  title: String!
+  subtitle: String
+  template: Template @belongsTo
+}
 
 type Participant @model {
   username: String!
   accountID: String! 
   retro: Retro @belongsTo
+  notes: [Note] @hasMany
 }
 
 type Creator @model {
@@ -43,7 +54,8 @@ type Creator @model {
 }
 
 type Note @model {
-  content: String! 
-  retro: Retro @belongsTo
+  content: String!
+  participant: Participant @belongsTo
+  column: Column
 }
 

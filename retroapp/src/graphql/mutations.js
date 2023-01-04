@@ -287,22 +287,22 @@ export const createRetro = /* GraphQL */ `
         }
         nextToken
       }
-      notes {
-        items {
-          content
-          id
-          createdAt
-          updatedAt
-          retroNotesId
+      template {
+        name
+        slug
+        columns {
+          nextToken
         }
-        nextToken
+        id
+        createdAt
+        updatedAt
       }
-      template
       id
       createdAt
       updatedAt
       creatorRetrosId
       retroCreatorId
+      retroTemplateId
     }
   }
 `;
@@ -334,22 +334,22 @@ export const updateRetro = /* GraphQL */ `
         }
         nextToken
       }
-      notes {
-        items {
-          content
-          id
-          createdAt
-          updatedAt
-          retroNotesId
+      template {
+        name
+        slug
+        columns {
+          nextToken
         }
-        nextToken
+        id
+        createdAt
+        updatedAt
       }
-      template
       id
       createdAt
       updatedAt
       creatorRetrosId
       retroCreatorId
+      retroTemplateId
     }
   }
 `;
@@ -381,22 +381,172 @@ export const deleteRetro = /* GraphQL */ `
         }
         nextToken
       }
-      notes {
-        items {
-          content
-          id
-          createdAt
-          updatedAt
-          retroNotesId
+      template {
+        name
+        slug
+        columns {
+          nextToken
         }
-        nextToken
+        id
+        createdAt
+        updatedAt
       }
-      template
       id
       createdAt
       updatedAt
       creatorRetrosId
       retroCreatorId
+      retroTemplateId
+    }
+  }
+`;
+export const createTemplate = /* GraphQL */ `
+  mutation CreateTemplate(
+    $input: CreateTemplateInput!
+    $condition: ModelTemplateConditionInput
+  ) {
+    createTemplate(input: $input, condition: $condition) {
+      name
+      slug
+      columns {
+        items {
+          title
+          subtitle
+          id
+          createdAt
+          updatedAt
+          templateColumnsId
+        }
+        nextToken
+      }
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateTemplate = /* GraphQL */ `
+  mutation UpdateTemplate(
+    $input: UpdateTemplateInput!
+    $condition: ModelTemplateConditionInput
+  ) {
+    updateTemplate(input: $input, condition: $condition) {
+      name
+      slug
+      columns {
+        items {
+          title
+          subtitle
+          id
+          createdAt
+          updatedAt
+          templateColumnsId
+        }
+        nextToken
+      }
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteTemplate = /* GraphQL */ `
+  mutation DeleteTemplate(
+    $input: DeleteTemplateInput!
+    $condition: ModelTemplateConditionInput
+  ) {
+    deleteTemplate(input: $input, condition: $condition) {
+      name
+      slug
+      columns {
+        items {
+          title
+          subtitle
+          id
+          createdAt
+          updatedAt
+          templateColumnsId
+        }
+        nextToken
+      }
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createColumn = /* GraphQL */ `
+  mutation CreateColumn(
+    $input: CreateColumnInput!
+    $condition: ModelColumnConditionInput
+  ) {
+    createColumn(input: $input, condition: $condition) {
+      title
+      subtitle
+      template {
+        name
+        slug
+        columns {
+          nextToken
+        }
+        id
+        createdAt
+        updatedAt
+      }
+      id
+      createdAt
+      updatedAt
+      templateColumnsId
+    }
+  }
+`;
+export const updateColumn = /* GraphQL */ `
+  mutation UpdateColumn(
+    $input: UpdateColumnInput!
+    $condition: ModelColumnConditionInput
+  ) {
+    updateColumn(input: $input, condition: $condition) {
+      title
+      subtitle
+      template {
+        name
+        slug
+        columns {
+          nextToken
+        }
+        id
+        createdAt
+        updatedAt
+      }
+      id
+      createdAt
+      updatedAt
+      templateColumnsId
+    }
+  }
+`;
+export const deleteColumn = /* GraphQL */ `
+  mutation DeleteColumn(
+    $input: DeleteColumnInput!
+    $condition: ModelColumnConditionInput
+  ) {
+    deleteColumn(input: $input, condition: $condition) {
+      title
+      subtitle
+      template {
+        name
+        slug
+        columns {
+          nextToken
+        }
+        id
+        createdAt
+        updatedAt
+      }
+      id
+      createdAt
+      updatedAt
+      templateColumnsId
     }
   }
 `;
@@ -420,15 +570,29 @@ export const createParticipant = /* GraphQL */ `
         participants {
           nextToken
         }
-        notes {
-          nextToken
+        template {
+          name
+          slug
+          id
+          createdAt
+          updatedAt
         }
-        template
         id
         createdAt
         updatedAt
         creatorRetrosId
         retroCreatorId
+        retroTemplateId
+      }
+      notes {
+        items {
+          content
+          id
+          createdAt
+          updatedAt
+          participantNotesId
+        }
+        nextToken
       }
       id
       createdAt
@@ -457,15 +621,29 @@ export const updateParticipant = /* GraphQL */ `
         participants {
           nextToken
         }
-        notes {
-          nextToken
+        template {
+          name
+          slug
+          id
+          createdAt
+          updatedAt
         }
-        template
         id
         createdAt
         updatedAt
         creatorRetrosId
         retroCreatorId
+        retroTemplateId
+      }
+      notes {
+        items {
+          content
+          id
+          createdAt
+          updatedAt
+          participantNotesId
+        }
+        nextToken
       }
       id
       createdAt
@@ -494,15 +672,29 @@ export const deleteParticipant = /* GraphQL */ `
         participants {
           nextToken
         }
-        notes {
-          nextToken
+        template {
+          name
+          slug
+          id
+          createdAt
+          updatedAt
         }
-        template
         id
         createdAt
         updatedAt
         creatorRetrosId
         retroCreatorId
+        retroTemplateId
+      }
+      notes {
+        items {
+          content
+          id
+          createdAt
+          updatedAt
+          participantNotesId
+        }
+        nextToken
       }
       id
       createdAt
@@ -520,12 +712,12 @@ export const createCreator = /* GraphQL */ `
       retros {
         items {
           title
-          template
           id
           createdAt
           updatedAt
           creatorRetrosId
           retroCreatorId
+          retroTemplateId
         }
         nextToken
       }
@@ -546,12 +738,12 @@ export const updateCreator = /* GraphQL */ `
       retros {
         items {
           title
-          template
           id
           createdAt
           updatedAt
           creatorRetrosId
           retroCreatorId
+          retroTemplateId
         }
         nextToken
       }
@@ -572,12 +764,12 @@ export const deleteCreator = /* GraphQL */ `
       retros {
         items {
           title
-          template
           id
           createdAt
           updatedAt
           creatorRetrosId
           retroCreatorId
+          retroTemplateId
         }
         nextToken
       }
@@ -596,32 +788,45 @@ export const createNote = /* GraphQL */ `
   ) {
     createNote(input: $input, condition: $condition) {
       content
-      retro {
-        title
-        creator {
-          username
-          accountID
+      participant {
+        username
+        accountID
+        retro {
+          title
           id
           createdAt
           updatedAt
-        }
-        participants {
-          nextToken
+          creatorRetrosId
+          retroCreatorId
+          retroTemplateId
         }
         notes {
           nextToken
         }
-        template
         id
         createdAt
         updatedAt
-        creatorRetrosId
-        retroCreatorId
+        retroParticipantsId
+      }
+      column {
+        title
+        subtitle
+        template {
+          name
+          slug
+          id
+          createdAt
+          updatedAt
+        }
+        id
+        createdAt
+        updatedAt
+        templateColumnsId
       }
       id
       createdAt
       updatedAt
-      retroNotesId
+      participantNotesId
     }
   }
 `;
@@ -632,32 +837,45 @@ export const updateNote = /* GraphQL */ `
   ) {
     updateNote(input: $input, condition: $condition) {
       content
-      retro {
-        title
-        creator {
-          username
-          accountID
+      participant {
+        username
+        accountID
+        retro {
+          title
           id
           createdAt
           updatedAt
-        }
-        participants {
-          nextToken
+          creatorRetrosId
+          retroCreatorId
+          retroTemplateId
         }
         notes {
           nextToken
         }
-        template
         id
         createdAt
         updatedAt
-        creatorRetrosId
-        retroCreatorId
+        retroParticipantsId
+      }
+      column {
+        title
+        subtitle
+        template {
+          name
+          slug
+          id
+          createdAt
+          updatedAt
+        }
+        id
+        createdAt
+        updatedAt
+        templateColumnsId
       }
       id
       createdAt
       updatedAt
-      retroNotesId
+      participantNotesId
     }
   }
 `;
@@ -668,32 +886,45 @@ export const deleteNote = /* GraphQL */ `
   ) {
     deleteNote(input: $input, condition: $condition) {
       content
-      retro {
-        title
-        creator {
-          username
-          accountID
+      participant {
+        username
+        accountID
+        retro {
+          title
           id
           createdAt
           updatedAt
-        }
-        participants {
-          nextToken
+          creatorRetrosId
+          retroCreatorId
+          retroTemplateId
         }
         notes {
           nextToken
         }
-        template
         id
         createdAt
         updatedAt
-        creatorRetrosId
-        retroCreatorId
+        retroParticipantsId
+      }
+      column {
+        title
+        subtitle
+        template {
+          name
+          slug
+          id
+          createdAt
+          updatedAt
+        }
+        id
+        createdAt
+        updatedAt
+        templateColumnsId
       }
       id
       createdAt
       updatedAt
-      retroNotesId
+      participantNotesId
     }
   }
 `;
