@@ -175,10 +175,6 @@
     this.subscribe();
   },
   methods: {
-    // I CAN GET RID OF FETCHING THE RETRO...WANT TO ADD Participants to Notes
-    // add: function() {
-    //   this.list.push({ name: "Juan" });
-    // },
     subscribe() {
       API.graphql({ query: onCreateNote }).subscribe({
         next:(eventData) => {
@@ -186,7 +182,8 @@
             if (this.notes.some((item) => item.id === note.id)) return; // remove duplications
             this.notes = [...this.notes, note];
         }
-      })
+      });
+      console.log(this.notes)
     },
     cancel() {
         this.$refs.modal2.$el.dismiss(null, 'cancel');
@@ -199,7 +196,6 @@
           query: createNote,
           variables: { input: input}
         });
-        console.log(note)
         this.$refs.modal2.$el.dismiss(content, 'confirm');
       },
       onWillDismiss(ev: CustomEvent<OverlayEventDetail>) {
@@ -218,7 +214,6 @@
     getTemplate() {
         const template = this.templates.filter(template => template.slug == this.$route.params.template)
         this.columndata = template[0].columns;
-        console.log(template[0].columns);
     }
   }
   });
