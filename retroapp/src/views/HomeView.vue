@@ -121,13 +121,14 @@
         IonInput,
   } from '@ionic/vue';
   import { Authenticator,useAuthenticator } from '@aws-amplify/ui-vue';
-    import { API } from 'aws-amplify';
+  import { API } from 'aws-amplify';
   import { createRetro, createCreator, deleteCreator, createTemplate, createColumn } from '../graphql/mutations';
-    import { getColumn, getTemplate, listRetros, getCreator,listCreators, listTemplates, listColumns } from '../graphql/queries';
+  import { getColumn, getTemplate, listRetros, getCreator,listCreators, listTemplates, listColumns } from '../graphql/queries';
   import { defineComponent, ref } from 'vue';
-    import { OverlayEventDetail } from '@ionic/core/components';
+  import { OverlayEventDetail } from '@ionic/core/components';
   import { add } from 'ionicons/icons';
   import { useRouter } from 'vue-router';
+  import { useRetroStore } from '../stores/retro';
   const auth = useAuthenticator();
   export default defineComponent({
     name: 'HomeView',
@@ -158,9 +159,11 @@
       IonMenuButton,
     },
     setup() {
+      const store = useRetroStore();
       return {
         router: useRouter(),
         add, 
+        store,
       }
     },
     async created() {
@@ -182,16 +185,16 @@
       },
       methods: {
             async getRetros(userid) {
-                let filter = { retroCreatorId: {
-                  eq: userid
-                } 
-                  
-                }
+                let filter = { 
+                  retroCreatorId: {
+                    eq: userid
+                  }
+                };
                 const retros = await API.graphql({
-                query: listRetros,
-                variables: { filter: filter}
-            });
-            this.retros = retros.data.listRetros.items
+                  query: listRetros,
+                  variables: { filter: filter}
+                });
+              this.retros = retros.data.listRetros.items
         },
         signout(){
           return this.auth.signout()
