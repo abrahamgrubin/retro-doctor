@@ -56,7 +56,7 @@
           </ion-item>
         </ion-content>
       </ion-modal>
-      <ion-grid v-for='column in columndata'>
+      <ion-grid v-for='column in template'>
         <ion-row>
             <RetroColumn :retrodata='column'/>
         </ion-row>
@@ -80,7 +80,7 @@
   import RetroColumn from './RetroColumn.vue';
   import { API } from 'aws-amplify';
   import { createNote } from '../graphql/mutations';
-  import { getRetro } from '../graphql/queries';
+  import { getRetro, getTemplate } from '../graphql/queries';
   import { onCreateNote } from '../graphql/subscriptions';
   import draggable from 'vuedraggable';
   const auth = useAuthenticator();
@@ -130,16 +130,7 @@
       columndata: {},
       retro: {},
       notes: [],
-      templates: [
-          { name: 'Custom', columns:[], slug: 'custom' },
-          { name: 'Agile Coffee', columns: [
-            { title: 'Topics', subtitle: 'placeholder' },
-            { title: 'Discussing',subtitle: 'placeholder' },
-            { title: 'Discussed', subtitle: 'placeholder' },
-            { title: 'Action Items', subtitle: 'placeholder' }
-            ], slug: 'agile_coffee'},
-          { name: 'Start Stop Contine', columns: ['Start', 'Stop', 'Continue', 'Action Items'], slug:'start_stop_continue'},
-      ],
+      templates: [],
       list1: [
         { name: "this is a test of an idea of something that someone might have", id: 1 },
         { name: "Joao", id: 2 },
@@ -171,7 +162,7 @@
     };
   },
   async created(){
-    this.getTemplate(); 
+    // this.getTemplate(); 
     this.subscribe();
   },
   methods: {
@@ -184,6 +175,14 @@
         }
       });
     },
+    // async getTemplate(){ 
+    //   const id = "8c035644-a5a4-4676-93cb-1d6329dc1261";
+    //   const template = await API.graphql({
+    //     query: getTemplate,
+    //     variables: { id: id }
+    //   });
+    //   this.template = template.data.getTemplate;
+    // },
     cancel() {
         this.$refs.modal2.$el.dismiss(null, 'cancel');
       },
@@ -210,10 +209,10 @@
         variables: { input: input}
       });
     },
-    getTemplate() {
-        const template = this.templates.filter(template => template.slug == this.$route.params.template)
-        this.columndata = template[0].columns;
-    }
+    // getTemplate() {
+    //     const template = this.templates.filter(template => template.slug == this.$route.params.template)
+    //     this.columndata = template[0].columns;
+    // }
   }
   });
 </script>

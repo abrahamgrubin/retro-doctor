@@ -82,10 +82,8 @@
 
         </ion-item>
         <ion-item>
-            <ion-select placeholder="Retro Template" ref="template">
-            <ion-select-option value="custom">Custom</ion-select-option>
-            <ion-select-option value="agile_coffee">Agile Coffee</ion-select-option>
-            <ion-select-option value="start_stop_continue">Start Stop Continue</ion-select-option>
+          <ion-select placeholder="Retro Template" ref="not_template">
+            <ion-select-option value="this.template">{{this.template.name}}</ion-select-option>
           </ion-select>
          </ion-item>
       </ion-content>
@@ -124,8 +122,8 @@
   } from '@ionic/vue';
   import { Authenticator,useAuthenticator } from '@aws-amplify/ui-vue';
     import { API } from 'aws-amplify';
-  import { createRetro, createCreator, deleteCreator, createTemplate } from '../graphql/mutations';
-    import { listRetros, getCreator,listCreators } from '../graphql/queries';
+  import { createRetro, createCreator, deleteCreator, createTemplate, createColumn } from '../graphql/mutations';
+    import { getColumn, getTemplate, listRetros, getCreator,listCreators, listTemplates, listColumns } from '../graphql/queries';
   import { defineComponent, ref } from 'vue';
     import { OverlayEventDetail } from '@ionic/core/components';
   import { add } from 'ionicons/icons';
@@ -167,7 +165,10 @@
     },
     async created() {
       this.getOrCreateCreator();
-      this.createOrGetTemplates();
+      // this.createOrGetTemplates();
+      // this.getTemplates()
+     // this.createColumn()
+      this.getTemplate();
     },
     data() {
         return {
@@ -242,22 +243,22 @@
           this.creators = creator.data.items
         },
             async createRetro() {
-                const { title,template } = this;
+                const { title, template } = this;
+                const retroTemplateId = this.template.id
                 const retroCreatorId = this.creator.id
                 if (!title) return;
-                const retro = { title, template, retroCreatorId };
+                const retro = { title, retroTemplateId, retroCreatorId };
                 const createdRetro = await API.graphql({
                   query: createRetro,
                   variables: { input: retro }
                 });
-                console.log(createdRetro)
-                this.$router.push(this.auth.user.username + '/retro/' + createdRetro.data.createRetro.id + '/' + createdRetro.data.createRetro.template + '/');
+                debugger;
+                this.$router.push(this.auth.user.username + '/retro/' + createdRetro.data.createRetro.id + '/' + this.template.slug + '/');
               },
             async createCreator() {
                 const username = this.auth.user.username
                 const accountID = this.auth.user.attributes.email;
                 const creator = { username, accountID };
-                debugger;
                 await API.graphql({
                   query: createCreator,
                   variables: { input: creator }
@@ -267,7 +268,56 @@
              const agileCoffee = { name: 'Agile Coffee', slug: 'agile_coffee' }
              const custom = { name: 'Custom', slug: 'custom' }
              const startStopContinue = { name: 'Start Stop Continue', slug: 'start_stop_continue' }
-             this.createTemplate(agileCoffee)
+             // this.createTemplate(startStopContinue)
+           },
+           async listTemplates() {
+             const templates = await API.graphql({
+                query: listTemplates
+             });
+             console.log(templates)
+           },
+           async createColumn() {
+            const column1 = { templateColumnsId: "8c035644-a5a4-4676-93cb-1d6329dc1261", title: 'Topics', subtitle: 'What topics would you like to discuss?' };
+            const column2 = { templateColumnsId: "8c035644-a5a4-4676-93cb-1d6329dc1261", title: 'Discussing',subtitle: 'What are we discussing?' };
+            const column3 = { templateColumnsId: "8c035644-a5a4-4676-93cb-1d6329dc1261", title: 'Discussed', subtitle: 'What did we discuss?' };
+            const column4 = { templateColumnsId: "8c035644-a5a4-4676-93cb-1d6329dc1261", title: 'Action Items', subtitle: 'What will we do about it?' };
+                // const newColumn1 = await API.graphql({
+                //   query: createColumn,
+                //   variables: { input: column1 }
+                // });
+                // const newColumn2 = await API.graphql({
+                //   query: createColumn,
+                //   variables: { input: column2 }
+                // });
+                // const newColumn3 = await API.graphql({
+                //   query: createColumn,
+                //   variables: { input: column3 }
+                // });
+                // const newColumn4 = await API.graphql({
+                //   query: createColumn,
+                //   variables: { input: column4 }
+                // });
+              console.log(newColumn1, newColumn2, newColumn3, newColumn4);
+           },
+           async getColumns() {
+              const columns = await API.graphql({
+                query: listColumns
+             });
+             console.log(columns);
+           },
+           async getTemplate(){ 
+             const id = "8c035644-a5a4-4676-93cb-1d6329dc1261";
+             const template = await API.graphql({
+                query: getTemplate,
+                variables: { id: id }
+              });
+              this.template = template.data.getTemplate;
+           },
+           async getTemplates() {
+            const templates = await API.graphql({
+                query: listTemplates
+              });
+              console.log(templates);
            },
            async createTemplate(template){
              const aTemplate= await API.graphql({
@@ -281,10 +331,10 @@
           },
           confirm() {
             const title = this.$refs.title.$el.value;
-            const template = this.$refs.template.$el.value;
+            const template = this.$refs.not_template.$el.value;
             this.$refs.modal.$el.dismiss(title, 'confirm');
             this.title = title
-            this.template= template
+            //this.template= template
             this.createRetro();
             // add in the route below
           },
