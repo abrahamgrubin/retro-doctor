@@ -48,7 +48,7 @@
       <ion-grid>
         <ion-row>
 
-      <ion-list v-for="item in retros" :key="item.id">
+      <ion-list v-for="item in store.retros" :key="item.id">
             <ion-col>
             <ion-card>
     <ion-card-header>
@@ -129,6 +129,7 @@
   import { add } from 'ionicons/icons';
   import { useRouter } from 'vue-router';
   import { useRetroStore } from '../stores/retro';
+  import { mapActions } from 'pinia';
   const auth = useAuthenticator();
   export default defineComponent({
     name: 'HomeView',
@@ -163,14 +164,16 @@
       return {
         router: useRouter(),
         add, 
-        store,
+        store
       }
     },
     async created() {
       this.getOrCreateCreator();
+      // this.getRetros();
       // this.createOrGetTemplates();
       // this.getTemplates()
      // this.createColumn()
+     //this.getRetros()
       this.getTemplate();
     },
     data() {
@@ -184,17 +187,10 @@
         }
       },
       methods: {
-            async getRetros(userid) {
-                let filter = { 
-                  retroCreatorId: {
-                    eq: userid
-                  }
-                };
-                const retros = await API.graphql({
-                  query: listRetros,
-                  variables: { filter: filter}
-                });
-              this.retros = retros.data.listRetros.items
+        // ...mapActions(useRetroStore, { getRetros: 'getRetros' }),
+        getRetros() {
+          this.store.getRetros();
+
         },
         signout(){
           return this.auth.signout()
@@ -209,21 +205,24 @@
                 variables: { input: user }
             });
         },
-        async getOrCreateCreator(){
-          let filter = {
-            username: {
-            eq: this.auth.user.username
-          }}
-          const creator = await API.graphql({
-                query: listCreators,
-                variables: { filter: filter}
-              })
-              if (creator.data.listCreators.items.length > 0) {
-                this.creator = creator.data.listCreators.items[0]
-                this.getRetros(this.creator.id);
-              } else {
-                this.createCreator();
-              }
+        getOrCreateCreator(){
+          this.store.user = this.auth.user;
+          this.store.getOrCreateCreator();
+          // let filter = {
+          //   username: {
+          //   eq: this.auth.user.username
+          // }}
+          // const creator = await API.graphql({
+          //       query: listCreators,
+          //       variables: { filter: filter}
+          //     })
+          //     debugger;
+          //     if (creator.data.listCreators.items.length > 0) {
+          //       this.creator = creator.data.listCreators.items[0]
+          //       this.getRetros(this.creator.id);
+          //     } else {
+          //       this.createCreator();
+          //     }
         },
         async deleteCreator(){
           const creator = this.creators[0]
