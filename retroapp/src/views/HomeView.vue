@@ -82,8 +82,8 @@
 
         </ion-item>
         <ion-item>
-          <ion-select placeholder="Retro Template" ref="not_template">
-            <ion-select-option value="this.template">{{this.template.name}}</ion-select-option>
+          <ion-select placeholder="Retro Template" ref="not_template" >
+            <ion-select-option v-for="item in store.templates" :key="item.id" :value="item">{{item.name}}</ion-select-option>
           </ion-select>
          </ion-item>
       </ion-content>
@@ -171,23 +171,21 @@
       this.getOrCreateCreator();
       // this.getRetros();
       // this.createOrGetTemplates();
-      // this.getTemplates()
+      this.getTemplates()
      // this.createColumn()
-     //this.getRetros()
-      this.getTemplate();
+      //this.getRetros()
+     // this.getTemplate();
     },
     data() {
         return {
           auth: auth,
           title: '',
-          retros: [],
           creator: {},
           template: '',
           createdRetroId: ''
         }
       },
       methods: {
-        // ...mapActions(useRetroStore, { getRetros: 'getRetros' }),
         getRetros() {
           this.store.getRetros();
 
@@ -195,34 +193,9 @@
         signout(){
           return this.auth.signout()
         },
-        async createCreator(){
-            const fetchedCreator = this.getCreator();
-            const username = this.auth.user.username
-            const accountID = this.auth.user.attributes.email
-            const user = { username, accountID } 
-            const creator = await API.graphql({
-                query: createCreator,
-                variables: { input: user }
-            });
-        },
         getOrCreateCreator(){
           this.store.user = this.auth.user;
           this.store.getOrCreateCreator();
-          // let filter = {
-          //   username: {
-          //   eq: this.auth.user.username
-          // }}
-          // const creator = await API.graphql({
-          //       query: listCreators,
-          //       variables: { filter: filter}
-          //     })
-          //     debugger;
-          //     if (creator.data.listCreators.items.length > 0) {
-          //       this.creator = creator.data.listCreators.items[0]
-          //       this.getRetros(this.creator.id);
-          //     } else {
-          //       this.createCreator();
-          //     }
         },
         async deleteCreator(){
           const creator = this.creators[0]
@@ -244,19 +217,18 @@
           });
           this.creators = creator.data.items
         },
-            async createRetro() {
-                const { title, template } = this;
-                const retroTemplateId = this.template.id
-                const retroCreatorId = this.creator.id
-                if (!title) return;
-                const retro = { title, retroTemplateId, retroCreatorId };
-                const createdRetro = await API.graphql({
-                  query: createRetro,
-                  variables: { input: retro }
-                });
-                debugger;
-                this.$router.push(this.auth.user.username + '/retro/' + createdRetro.data.createRetro.id + '/' + this.template.slug + '/');
-              },
+            // async createRetro() {
+            //     const { title, template } = this;
+            //     const retroTemplateId = store.template.id
+            //     const retroCreatorId = this.creator.id
+            //     if (!title) return;
+            //     const retro = { title, retroTemplateId, retroCreatorId };
+            //     const createdRetro = await API.graphql({
+            //       query: createRetro,
+            //       variables: { input: retro }
+            //     });
+            //     this.$router.push(this.auth.user.username + '/retro/' + store.selectedTemplate.slug + '/' + this.template.slug + '/');
+            //   },
             async createCreator() {
                 const username = this.auth.user.username
                 const accountID = this.auth.user.attributes.email;
@@ -273,10 +245,7 @@
              // this.createTemplate(startStopContinue)
            },
            async listTemplates() {
-             const templates = await API.graphql({
-                query: listTemplates
-             });
-             console.log(templates)
+              this.store.getTemplates();
            },
            async createColumn() {
             const column1 = { templateColumnsId: "8c035644-a5a4-4676-93cb-1d6329dc1261", title: 'Topics', subtitle: 'What topics would you like to discuss?' };
@@ -307,19 +276,8 @@
              });
              console.log(columns);
            },
-           async getTemplate(){ 
-             const id = "8c035644-a5a4-4676-93cb-1d6329dc1261";
-             const template = await API.graphql({
-                query: getTemplate,
-                variables: { id: id }
-              });
-              this.template = template.data.getTemplate;
-           },
            async getTemplates() {
-            const templates = await API.graphql({
-                query: listTemplates
-              });
-              console.log(templates);
+            this.store.getTemplates();
            },
            async createTemplate(template){
              const aTemplate= await API.graphql({
@@ -332,12 +290,12 @@
             this.$refs.modal.$el.dismiss(null, 'cancel');
           },
           confirm() {
-            const title = this.$refs.title.$el.value;
-            const template = this.$refs.not_template.$el.value;
-            this.$refs.modal.$el.dismiss(title, 'confirm');
-            this.title = title
-            //this.template= template
-            this.createRetro();
+            this.store.$patch({
+              retroTitle: this.$refs.title.$el.value,
+              selectedTemplate: this.$refs.not_template.$el.value 
+            });
+            this.$refs.modal.$el.dismiss(this.store.retroTitle, 'confirm');
+            this.store.createRetro();
             // add in the route below
           },
           onWillDismiss(ev: CustomEvent<OverlayEventDetail>) {

@@ -1,4 +1,4 @@
-import { createApp } from "vue";
+import { createApp, markRaw } from "vue";
 import { createPinia } from "pinia";
 import { Amplify } from 'aws-amplify';
 
@@ -21,10 +21,14 @@ import '@ionic/vue/css/text-alignment.css';
 import '@ionic/vue/css/text-transformation.css';
 import '@ionic/vue/css/flex-utils.css';
 import '@ionic/vue/css/display.css';
-
+const pinia = createPinia() 
+pinia.use(
+    ({ store }) => { 
+        store.router = markRaw(router)
+    });
 const app = createApp(App);
 Amplify.configure(awsExports);
-app.use(createPinia());
+app.use(pinia);
 app.use(router);
 app.use(IonicVue);
 

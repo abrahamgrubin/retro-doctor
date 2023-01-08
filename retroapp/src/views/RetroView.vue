@@ -15,7 +15,7 @@
         router: useRouter()
       }},
         created(){
-            this.getTemplate();
+           // this.getTemplate();
         },
         components: {
             Retro
