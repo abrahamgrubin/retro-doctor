@@ -129,8 +129,8 @@
   import { add } from 'ionicons/icons';
   import { useRouter } from 'vue-router';
   import { useRetroStore } from '../stores/retro';
-  import { mapActions } from 'pinia';
   const auth = useAuthenticator();
+  
   export default defineComponent({
     name: 'HomeView',
     components: {
@@ -169,12 +169,7 @@
     },
     async created() {
       this.getOrCreateCreator();
-      // this.getRetros();
-      // this.createOrGetTemplates();
       this.getTemplates()
-     // this.createColumn()
-      //this.getRetros()
-     // this.getTemplate();
     },
     data() {
         return {
@@ -188,7 +183,6 @@
       methods: {
         getRetros() {
           this.store.getRetros();
-
         },
         signout(){
           return this.auth.signout()

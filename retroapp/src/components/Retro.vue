@@ -56,9 +56,9 @@
           </ion-item>
         </ion-content>
       </ion-modal>
-      <ion-grid v-for='column in template'>
+      <ion-grid  v-for="item in store.columns">
         <ion-row>
-            <RetroColumn :retrodata='column'/>
+            <RetroColumn :retrodata='item'/>
         </ion-row>
       </ion-grid>
       <ion-fab vertical="bottom" horizontal="end" slot="fixed">
@@ -83,14 +83,12 @@
   import { getRetro, getTemplate } from '../graphql/queries';
   import { onCreateNote } from '../graphql/subscriptions';
   import draggable from 'vuedraggable';
+  import { useRetroStore } from '../stores/retro';
   const auth = useAuthenticator();
-  defineProps({
-    template: String
-    });
+
   export default defineComponent({
     name: 'Retro',
     display: "Two Lists",
-    props: ['template'],
     order: 1,
     components: {
       draggable,
@@ -119,9 +117,11 @@
       RetroColumn
     },
     setup() {
+      const store = useRetroStore()
       return {
         router: useRouter(),
-        add, 
+        add,
+        store
       }
     },
     data() {
@@ -130,7 +130,6 @@
       columndata: {},
       retro: {},
       notes: [],
-      templates: [],
       list1: [
         { name: "this is a test of an idea of something that someone might have", id: 1 },
         { name: "Joao", id: 2 },
@@ -162,7 +161,8 @@
     };
   },
   async created(){
-    // this.getTemplate(); 
+    console.log(this.store.columns)
+    this.store.getSelectedTemplate()
     this.subscribe();
   },
   methods: {
@@ -175,14 +175,6 @@
         }
       });
     },
-    // async getTemplate(){ 
-    //   const id = "8c035644-a5a4-4676-93cb-1d6329dc1261";
-    //   const template = await API.graphql({
-    //     query: getTemplate,
-    //     variables: { id: id }
-    //   });
-    //   this.template = template.data.getTemplate;
-    // },
     cancel() {
         this.$refs.modal2.$el.dismiss(null, 'cancel');
       },

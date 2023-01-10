@@ -2,7 +2,7 @@
     <ion-col class="ion-text-center">
       <ion-card>
         <ion-card-header>
-          <ion-card-title>{{ this.retrodata.title }}</ion-card-title>
+          <ion-card-title>{{ this.retrodata.title}}</ion-card-title>
           <ion-card-subtitle>{{ this.retrodata.subtitle }}</ion-card-subtitle>
         </ion-card-header>
         <Notes />
@@ -18,9 +18,7 @@
   import { useRouter } from 'vue-router';
   import Notes from './Notes.vue';
   import draggable from 'vuedraggable';
-  defineProps({
-      retrodata: Object
-  })
+  import { useRetroStore } from '../stores/retro';
 export default defineComponent({
     name: 'RetroColumn',
     display: "Retro Columns",
@@ -50,13 +48,16 @@ export default defineComponent({
       Notes
     },
     setup() {
+      const store = useRetroStore();
       return {
         router: useRouter(),
         add, 
+        store
       }
     },
     created(){
-        this.getTemplate()
+
+     console.log(this.store.selectedTemplate);
     },
     data() {
     return {

@@ -13,7 +13,7 @@ import RetroView from '../views/RetroView.vue'
     {
       path: "/:userid/retro/:retroid/:template/",
       name: "RetroView",
-      component: RetroView
+      component: RetroView,
     },
     {
       path: "/agilecoffee",

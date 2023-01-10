@@ -1,6 +1,6 @@
 <template>
     <h2>Retro View</h2>
-    <Retro :template='this.template'/>
+    <Retro />
 </template>
 <script>
     import { defineComponent } from 'vue';
@@ -8,14 +8,17 @@
     import { useRouter } from 'vue-router';
     import { API } from 'aws-amplify';
     import { getTemplate } from '../graphql/queries';
+    import { useRetroStore } from '../stores/retro';
     export default defineComponent({
         name: 'RetroView',
         setup() {
+            const store = useRetroStore()
       return {
-        router: useRouter()
+        router: useRouter(),
+        store
       }},
         created(){
-           // this.getTemplate();
+
         },
         components: {
             Retro
@@ -32,7 +35,6 @@
                 query: getTemplate,
                 variables: { id: id }
               });
-              debugger;
               this.template = template.data.getTemplate;
             },
         }

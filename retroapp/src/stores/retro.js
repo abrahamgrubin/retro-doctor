@@ -1,6 +1,7 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 import { API } from 'aws-amplify';
+
 import { createRetro, createCreator, deleteCreator, createTemplate, createColumn } from '../graphql/mutations';
 import { getColumn, getTemplate, listRetros, getCreator,listCreators, listTemplates, listColumns } from '../graphql/queries';
 export const useRetroStore = defineStore("retro", {
@@ -16,9 +17,9 @@ export const useRetroStore = defineStore("retro", {
       user: {},
       retroTitle: '',
   }),
-//   getters: {
+  getters: {
 //     doubleCount: (state) => state.count * 2,
-//   },
+  },
   actions: {
     async getOrCreateCreator() {
         let filter = {
@@ -33,7 +34,6 @@ export const useRetroStore = defineStore("retro", {
             this.creator = findCreator.data.listCreators.items[0]
             this.getRetros(this.creator.id);
         } else {
-          debugger;
             this.createCreator();
         };
     },
@@ -46,7 +46,6 @@ export const useRetroStore = defineStore("retro", {
                 variables: { input: user }
             });
             this.creator = createdCreator.data.createCreator
-            console.log(createdCreator)
             return this.creator
         },
         
@@ -69,6 +68,14 @@ export const useRetroStore = defineStore("retro", {
         });
         this.templates = findTemplates.data.listTemplates.items
       },
+      async getSelectedTemplate() {
+        const findTemplate = await API.graphql({
+          query: getTemplate,
+          variables: { id: this.selectedTemplate.id }
+          })
+          this.columns = findTemplate.data.getTemplate.columns.items;         console.log()
+        },
+      
       async createRetro() {
         const { selectedTemplate } = this;
         const title = this.retroTitle;
@@ -82,48 +89,6 @@ export const useRetroStore = defineStore("retro", {
         });
         this.retro = createdRetro.data.createRetro;
         this.router.push(this.creator.username + '/retro/' + this.selectedTemplate.slug + '/' + this.retro.id + '/');
-
       },
   },
 });
-// export const useRetroStore = defineStore("retro", () => {
-//     // ref is setting state properties
-//     const creator = ref({});
-//     const retros = ref([]);
-//     const templates = ref([]);
-//     const columns = ref([]);
-//     const participants = ref([]);
-//     const notes = ref([]);
-//     const creatorID = ref('');
-//     const user = ref({});
-    
-//     //computed are getters
-
-//     //function are actions
-
-//     return { retros, templates, creator }
-//     // getters: {
-//     //     getRetros(state){
-//     //       return state.retros
-//     //     },
-//     //     getTemplates(state) {
-//     //         return state.templates
-//     //     },
-//     //     getCreator(state){
-//     //         return state.creator
-//     //     }
-//     // },
-//     // actions: {
-//     //     async listRetros() {
-//     //             let filter = { retroCreatorId: {
-//     //               eq: this.creator.id
-//     //             } 
-//     //         }
-//     //             const retros = await API.graphql({
-//     //             query: listRetros,
-//     //             variables: { filter: filter}
-//     //         });
-//     //         this.retros = retros.data.listRetros.items
-//     //     },
-
-// });
